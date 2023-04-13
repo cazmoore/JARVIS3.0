@@ -23,5 +23,3 @@ def speak(text):
     finally:
         pygame.mixer.music.stop()
         pygame.mixer.quit()
-
-

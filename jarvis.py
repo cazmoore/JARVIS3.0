@@ -180,9 +180,13 @@ if __name__ == "__main__":
 
     while True:
         query = take_command_speech().lower()
-        query = word_tokenize(query)
+        # query = word_tokenize(query)
 
         if wakeword in query:
+            query = query.replace("jarvis", "")
+            # print(query)
+            # query.remove("jarvis")
+            # print(query)
             if "time" in query:
                 time()
 
@@ -297,7 +301,7 @@ if __name__ == "__main__":
             elif "password" in query:
                 password_gen()
 
-            elif "offline" or "sleep" in query:
+            elif "offline" in query or "sleep" in query:
                 speak("Ok, bye for now.")
                 quit()
 

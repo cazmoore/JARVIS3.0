@@ -1,6 +1,8 @@
 import pyttsx3
 import openai
 import hidden
+from new_voices import speak
+from time import sleep
 
 openai.api_key = hidden.openai_api_key
 
@@ -10,13 +12,15 @@ restart_sequence = "\nHuman: "
 prompt = "The following is a conversation with an AI assistant."
 engine = pyttsx3.init()
 
-def speak(text):
-    engine.say(text)
-    engine.runAndWait()
+# def speak(text):
+#     engine.say(text)
+#     engine.runAndWait()
 
 # speak("Hello, I'm Jarvis. How can I help you?")
 
 def gpt_output(prompt):
+    print(prompt)
+
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
@@ -29,13 +33,18 @@ def gpt_output(prompt):
     )
 
     data = response.choices[0].text
+
+    sleep(5)
     speak(data)
-    # return data
 
-while True:
-    query = input("Ask the AI a question:\n")
-    gpt_output(query)
+    return data
 
+
+#
+# while True:
+#     query = input("Ask the AI a question:\n")
+#     gpt_output(query)
+# gpt_output("Who is the strongest Avenger?")
 
 
 
