@@ -1,4 +1,9 @@
 # This is the product of a Udemy course - needs significant tailoring and refactoring
+# TODO tidy up comments and redundant code throughout
+# todo add various greetings, bye phrases etc, and set to pick randomly from the list
+# todo allow ability to save last access time, so that greeting can be shorter
+# todo integrate with todoist, google calendar etc.
+# todo modularise code
 
 import clipboard
 import datetime
@@ -19,7 +24,7 @@ from email.message import EmailMessage
 from mediawiki import MediaWiki
 from newsapi import NewsApiClient
 from new_voices import speak
-from nltk.tokenize import word_tokenize
+# from nltk.tokenize import word_tokenize
 from time import sleep
 
 # engine = pyttsx3.init()
@@ -32,17 +37,13 @@ wakeword = "jarvis"
 
 
 def time():
-    # TODO tidy up the way Jarvis reads out the time
-    xtime = datetime.datetime.now().strftime("%I:%M:%S")
+    xtime = datetime.datetime.now().strftime("%-I:%-M %p")
     speak(f"The current time is {xtime}.")
 
 
 def date():
-    # TODO tidy up the way Jarvis reads out the date
-    year = int(datetime.datetime.now().year)
-    month = int(datetime.datetime.now().month)
-    day = int(datetime.datetime.now().day)
-    speak(f"Today is {day}, {month}, {year}.")
+    xtime = datetime.datetime.now().strftime("%A, %-d %B, %Y")
+    speak(f"Today is {xtime}.")
 
 
 def greeting():
@@ -251,18 +252,16 @@ if __name__ == "__main__":
 
                 weather = data["current"]
                 temp = weather["temp"]
-                feels_like = weather["feels_like"]
+                feels_like = int(weather["feels_like"])
                 humidity = weather["humidity"]
-                wind_speed = weather["wind_speed"]
+                wind_speed = int(weather["wind_speed"])
                 # wind_gust = weather["wind_gust"]
                 description = weather["weather"][0]["description"]
 
-                # TODO clean up decimal places on temp and wind
-                speak(f"It is currently {temp} degrees farenheit, with {humidity}% humidity, feeling like {feels_like} "
+                speak(f"It is currently {temp} degrees fahrenheit, with {humidity}% humidity, feeling like {feels_like} "
                       f"degrees. The wind is {wind_speed} miles per hour and {description}.")
 
-            elif "news" in query:
-                # TODO figure out why I can't add "headlines" as an alternative trigger
+            elif "news" in query or "headlines" in query:
                 news()
 
             elif "read" in query:
@@ -294,7 +293,6 @@ if __name__ == "__main__":
                 remember.close()
 
             elif "remind" in query:
-                # TODO fix issue with multi word prompts not seeming to work
                 remember = open("data.txt", "r")
                 speak(f"You asked me to remember {remember.read()}.")
 
