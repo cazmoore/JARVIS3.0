@@ -60,14 +60,12 @@ def greeting():
 
 def wish_me():
     greeting()
-    # time()
-    # date()
     speak("How can I help you today?")
 
 
-def take_command_text():
-    query = input("How can I help you today? ")
-    return query
+# def take_command_text():
+#     query = input("How can I help you today? ")
+#     return query
 
 
 def take_command_speech():
