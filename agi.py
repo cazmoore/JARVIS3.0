@@ -1,10 +1,10 @@
-import pyttsx3
-import openai
 import hidden
+import pyttsx3
+from openai import OpenAI
 from new_voices import speak
 from time import sleep
 
-openai.api_key = hidden.openai_api_key
+client = OpenAI(api_key=hidden.openai_api_key)
 
 start_sequence = "\nAI:"
 restart_sequence = "\nHuman: "
@@ -20,8 +20,8 @@ engine = pyttsx3.init()
 # speak("Hello, I'm Jarvis. How can I help you?")
 
 def gpt_output(prompt):
-    response = openai.Completion.create(
-        model="text-davinci-003",
+    response = client.completions.create(
+        model="gpt-3.5-turbo-instruct",
         prompt=prompt,
         temperature=0.9,
         max_tokens=150,
@@ -31,7 +31,7 @@ def gpt_output(prompt):
         stop=[" Human:", " AI:"]
     )
 
-    data = response.choices[0].text
+    data = response.choices[0].text.strip()
 
     sleep(1)
     speak(data)

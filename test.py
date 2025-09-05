@@ -1,16 +1,17 @@
 import gradio as gr
-import openai
 import hidden
+from openai import OpenAI
 
-openai.api_key = hidden.openai_api_key
+client = OpenAI(api_key=hidden.openai_api_key)
+
 
 start_sequence = "\nAI:"
 restart_sequence = "\nHuman: "
 
 
 def gpt_output(prompt):
-    response = openai.Completion.create(
-        model="text-davinci-003",
+    response = client.completions.create(
+        model="gpt-3.5-turbo-instruct",
         prompt=prompt,
         temperature=0.9,
         max_tokens=150,
@@ -19,8 +20,7 @@ def gpt_output(prompt):
         presence_penalty=0.6,
         stop=[" Human:", " AI:"]
     )
-
-    return response.choices[0].text
+    return response.choices[0].text.strip()
 
 def chatgpt_clone(input, history):
     history = history or []
