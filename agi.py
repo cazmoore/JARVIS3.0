@@ -20,20 +20,18 @@ engine = pyttsx3.init()
 # speak("Hello, I'm Jarvis. How can I help you?")
 
 def gpt_output(prompt):
-    response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.7,
-        max_tokens=500,
+    response = client.completions.create(
+        model="gpt-3.5-turbo-instruct",
+        prompt=prompt,
+        temperature=0.9,
+        max_tokens=150,
         top_p=1,
         frequency_penalty=0,
-        presence_penalty=0.6
+        presence_penalty=0.6,
+        stop=[" Human:", " AI:"]
     )
 
-    data = response.choices[0].message.content.strip()
+    data = response.choices[0].text.strip()
 
     sleep(1)
     speak(data)
