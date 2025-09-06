@@ -10,17 +10,19 @@ restart_sequence = "\nHuman: "
 
 
 def gpt_output(prompt):
-    response = client.completions.create(
-        model="gpt-3.5-turbo-instruct",
-        prompt=prompt,
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "You are a helpful AI assistant."},
+            {"role": "user", "content": prompt}
+        ],
         temperature=0.9,
         max_tokens=150,
         top_p=1,
         frequency_penalty=0,
-        presence_penalty=0.6,
-        stop=[" Human:", " AI:"]
+        presence_penalty=0.6
     )
-    return response.choices[0].text.strip()
+    return response.choices[0].message.content
 
 def chatgpt_clone(input, history):
     history = history or []

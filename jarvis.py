@@ -21,7 +21,7 @@ import subprocess
 import webbrowser as wb
 from agi import gpt_output
 from email.message import EmailMessage
-from mediawiki import MediaWiki
+import wikipediaapi
 from newsapi import NewsApiClient
 from new_voices import speak
 # from nltk.tokenize import word_tokenize
