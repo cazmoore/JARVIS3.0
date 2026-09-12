@@ -36,3 +36,8 @@ jarvis_env/
 /hidden.py
 /data.mp3
 /data.txt
+
+# Secrets - never commit (added 2026-09-04, card VKxhLH5r)
+.env
+.env.*
+!.env.example
